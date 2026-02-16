@@ -62,65 +62,71 @@ const AdminDashboard = () => {
     }
   };
 
-  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}><h2>Loading...</h2></div>;
+  if (loading) return <div style={{ padding: '32px', textAlign: 'center' }}><h2>Loading...</h2></div>;
 
   return (
-    <div className="container" style={{ padding: '8px 5px', maxWidth: '1000px' }}>
-      <h1 style={{ marginBottom: '8px', color: '#333', fontSize: '18px' }}>👨‍🏫 Admin Dashboard</h1>
+    <div className="container" style={{ padding: '6px 4px', maxWidth: '900px' }}>
+      <h1 style={{ marginBottom: '6px', color: '#333', fontSize: '16px' }}>👨‍🏫 Admin Dashboard</h1>
 
       {error && <div className="alert alert-error" style={{ padding: '6px', fontSize: '11px' }}>{error}</div>}
       {success && <div className="alert alert-success" style={{ padding: '6px', fontSize: '11px' }}>{success}</div>}
 
       {/* Key Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px', marginBottom: '12px' }}>
-        <div className="card" style={{ padding: '8px' }}>
-          <h3 style={{ fontSize: '12px', margin: '0 0 4px 0' }}>👥 Total</h3>
-          <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#007bff', margin: '0' }}>{stats?.totalStudents || 0}</p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: '6px', marginBottom: '8px' }}>
+        <div className="card" style={{ padding: '6px' }}>
+          <h3 style={{ fontSize: '11px', margin: '0 0 3px 0' }}>👥 Total</h3>
+          <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#007bff', margin: '0' }}>{stats?.totalStudents || 0}</p>
         </div>
-        <div className="card" style={{ padding: '8px' }}>
-          <h3 style={{ fontSize: '12px', margin: '0 0 4px 0' }}>✅ Active</h3>
-          <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#28a745', margin: '0' }}>{stats?.activeStudents || 0}</p>
+        <div className="card" style={{ padding: '6px' }}>
+          <h3 style={{ fontSize: '11px', margin: '0 0 3px 0' }}>✅ Active</h3>
+          <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#28a745', margin: '0' }}>{stats?.activeStudents || 0}</p>
         </div>
-        <div className="card" style={{ padding: '8px' }}>
-          <h3 style={{ fontSize: '12px', margin: '0 0 4px 0' }}>📊 Avg</h3>
-          <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#ffc107', margin: '0' }}>{stats?.averageReadinessScore || 0}%</p>
+        <div className="card" style={{ padding: '6px' }}>
+          <h3 style={{ fontSize: '11px', margin: '0 0 3px 0' }}>📊 Avg</h3>
+          <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffc107', margin: '0' }}>{stats?.averageReadinessScore || 0}%</p>
         </div>
       </div>
 
       {/* Charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', marginBottom: '12px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '10px' }}>
         {stats?.readinessDistribution && (
-          <div className="card" style={{ padding: '12px' }}>
-            <h3 style={{ fontSize: '14px', margin: '0 0 8px 0' }}>📈 Readiness Distribution</h3>
-            <Pie 
-              data={{
-                labels: Object.keys(stats.readinessDistribution),
-                datasets: [{
-                  data: Object.values(stats.readinessDistribution),
-                  backgroundColor: ['#28a745', '#ffc107', '#17a2b8', '#fd7e14', '#6c757d']
-                }]
-              }}
-              options={{ responsive: true, maintainAspectRatio: true }}
-            />
+          <div className="card" style={{ padding: '10px' }}>
+            <h3 style={{ fontSize: '13px', margin: '0 0 6px 0' }}>📈 Readiness Distribution</h3>
+            <div style={{ maxWidth: '420px', height: '320px', margin: '0 auto' }}>
+              <Pie 
+                data={{
+                  labels: Object.keys(stats.readinessDistribution),
+                  datasets: [{
+                    data: Object.values(stats.readinessDistribution),
+                    backgroundColor: ['#28a745', '#ffc107', '#17a2b8', '#fd7e14', '#6c757d']
+                  }]
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } } }
+                }}
+              />
+            </div>
           </div>
         )}
       </div>
 
       {/* Top Performers */}
-      <div className="card" style={{ marginBottom: '15px', padding: '12px' }}>
-        <h3 style={{ fontSize: '14px', margin: '0 0 10px 0' }}>🏆 Top 10 Performers</h3>
+      <div className="card" style={{ marginBottom: '12px', padding: '10px' }}>
+        <h3 style={{ fontSize: '13px', margin: '0 0 8px 0' }}>🏆 Top 10 Performers</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '2px solid #eee' }}>
-              <th style={{ padding: '6px', textAlign: 'left', fontSize: '12px' }}>Name</th>
-              <th style={{ padding: '6px', textAlign: 'left', fontSize: '12px' }}>Readiness Score</th>
+              <th style={{ padding: '5px', textAlign: 'left', fontSize: '11px' }}>Name</th>
+              <th style={{ padding: '5px', textAlign: 'left', fontSize: '11px' }}>Readiness Score</th>
             </tr>
           </thead>
           <tbody>
             {stats?.topPerformers?.map((student, idx) => (
               <tr key={idx} style={{ borderBottom: '1px solid #eee' }}>
-                <td style={{ padding: '6px', fontSize: '12px' }}>{student.name}</td>
-                <td style={{ padding: '6px', fontSize: '12px' }}><span className="badge badge-success">{student.score.score}%</span></td>
+                <td style={{ padding: '5px', fontSize: '11px' }}>{student.name}</td>
+                <td style={{ padding: '5px', fontSize: '11px' }}><span className="badge badge-success">{student.score.score}%</span></td>
               </tr>
             ))}
           </tbody>
@@ -128,22 +134,22 @@ const AdminDashboard = () => {
       </div>
 
       {/* Low Consistency Students */}
-      <div className="card" style={{ marginBottom: '15px', padding: '12px' }}>
-        <h3 style={{ fontSize: '14px', margin: '0 0 10px 0' }}>⚠️ Students Needing Attention (Low Consistency)</h3>
+      <div className="card" style={{ marginBottom: '12px', padding: '10px' }}>
+        <h3 style={{ fontSize: '13px', margin: '0 0 8px 0' }}>⚠️ Students Needing Attention (Low Consistency)</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '2px solid #eee' }}>
-              <th style={{ padding: '6px', textAlign: 'left', fontSize: '12px' }}>Name</th>
-              <th style={{ padding: '6px', textAlign: 'left', fontSize: '12px' }}>Consistency</th>
-              <th style={{ padding: '6px', textAlign: 'left', fontSize: '12px' }}>Status</th>
+              <th style={{ padding: '5px', textAlign: 'left', fontSize: '11px' }}>Name</th>
+              <th style={{ padding: '5px', textAlign: 'left', fontSize: '11px' }}>Consistency</th>
+              <th style={{ padding: '5px', textAlign: 'left', fontSize: '11px' }}>Status</th>
             </tr>
           </thead>
           <tbody>
             {stats?.lowConsistencyStudents?.map((student, idx) => (
               <tr key={idx} style={{ borderBottom: '1px solid #eee' }}>
-                <td style={{ padding: '6px', fontSize: '12px' }}>{student.name}</td>
-                <td style={{ padding: '6px', fontSize: '12px' }}>{student.score.codingConsistency}%</td>
-                <td style={{ padding: '6px', fontSize: '12px' }}><span className="badge badge-danger">{student.score.status}</span></td>
+                <td style={{ padding: '5px', fontSize: '11px' }}>{student.name}</td>
+                <td style={{ padding: '5px', fontSize: '11px' }}>{student.score.codingConsistency}%</td>
+                <td style={{ padding: '5px', fontSize: '11px' }}><span className="badge badge-danger">{student.score.status}</span></td>
               </tr>
             ))}
           </tbody>
@@ -151,11 +157,11 @@ const AdminDashboard = () => {
       </div>
 
       {/* Post Announcement */}
-      <div className="card" style={{ marginBottom: '15px', padding: '12px' }}>
-        <h3 style={{ fontSize: '14px', margin: '0 0 10px 0' }}>📢 Post Announcement</h3>
+      <div className="card" style={{ marginBottom: '12px', padding: '10px' }}>
+        <h3 style={{ fontSize: '13px', margin: '0 0 8px 0' }}>📢 Post Announcement</h3>
         <form onSubmit={handleAnnouncementSubmit}>
           <div className="form-group">
-            <label style={{ fontSize: '12px' }}>Title</label>
+            <label style={{ fontSize: '11px' }}>Title</label>
             <input
               type="text"
               name="title"
@@ -163,11 +169,11 @@ const AdminDashboard = () => {
               value={announcement.title}
               onChange={handleAnnouncementChange}
               required
-              style={{ padding: '6px', fontSize: '12px' }}
+              style={{ padding: '5px', fontSize: '11px' }}
             />
           </div>
           <div className="form-group">
-            <label style={{ fontSize: '12px' }}>Description</label>
+            <label style={{ fontSize: '11px' }}>Description</label>
             <textarea
               name="description"
               placeholder="Announcement details"
@@ -175,12 +181,12 @@ const AdminDashboard = () => {
               onChange={handleAnnouncementChange}
               rows="3"
               required
-              style={{ padding: '6px', fontSize: '12px' }}
+              style={{ padding: '5px', fontSize: '11px' }}
             ></textarea>
           </div>
           <div className="form-group">
-            <label style={{ fontSize: '12px' }}>Type</label>
-            <select name="type" value={announcement.type} onChange={handleAnnouncementChange} style={{ padding: '6px', fontSize: '12px' }}>
+            <label style={{ fontSize: '11px' }}>Type</label>
+            <select name="type" value={announcement.type} onChange={handleAnnouncementChange} style={{ padding: '5px', fontSize: '11px' }}>
               <option value="other">General</option>
               <option value="placement_drive">🏢 Placement Drive</option>
               <option value="test">📝 Test</option>
@@ -188,7 +194,7 @@ const AdminDashboard = () => {
             </select>
           </div>
           <div className="form-group">
-            <label style={{ fontSize: '12px' }}>
+            <label style={{ fontSize: '11px' }}>
               <input
                 type="checkbox"
                 name="important"
@@ -198,10 +204,10 @@ const AdminDashboard = () => {
               {' '} Mark as Important
             </label>
           </div>
-          <button type="submit" className="btn btn-primary" style={{ marginRight: '10px', padding: '6px 12px', fontSize: '12px' }}>
+          <button type="submit" className="btn btn-primary" style={{ marginRight: '8px', padding: '5px 10px', fontSize: '11px' }}>
             📤 Post Announcement
           </button>
-          <button type="button" className="btn btn-success" onClick={handleExportReport} style={{ padding: '6px 12px', fontSize: '12px' }}>
+          <button type="button" className="btn btn-success" onClick={handleExportReport} style={{ padding: '5px 10px', fontSize: '11px' }}>
             📥 Export Report (CSV)
           </button>
         </form>
